@@ -1,0 +1,32 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+nav {
+  height: 60px;
+  background-color: #4a4c88;
+}
+ul > li {
+  display: inline-block;
+  padding: 0 60px;
+}
+li > a {
+  line-height: 60px;
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  text-transform: uppercase;
+  list-style: none;
+  cursor: pointer;
+  opacity: 0.7;
+}
+li > a:hover {
+  opacity: 1.0;
+}
+section {
+  padding: 60px;
+}
+section > h1 {
+  margin-bottom: 20px;
+}
