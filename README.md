@@ -1,3 +1,5 @@
+* [http://poiemaweb.com/js-spa](http://poiemaweb.com/js-spa)
+
 # 1. Introduction
 
 단일 페이지 어플리케이션(Single Page Application, SPA)는 모던 웹의 패러다임이다.
@@ -98,7 +100,9 @@ $ npm run link
 
 전통적 링크 방식은 이전 페이지에서 수신된 html로 전환하는 과정에서 전체 페이지를 새로 로딩하게 되므로 새로고침이 발생한다. 간단한 웹페이지라면 문제될 것이 없겠지만 복잡한 웹페이지의 경우, 요청마다 중복된 HTML과 CSS, JavaScript를 매번 다운로드해야하므로 속도 저하의 요인이 된다.
 
-전통적 링크 방식의 단점을 보완하기 위해 등장한 것이 Ajax(Asynchronous JavaScript and XML)이다. Ajax 방식은 비동기 통신을 통해 필요한 리소스만을 요청하고 수신된 리소스로 화면의 일부분만을 변경하는 기술이다.
+전통적 링크 방식의 단점을 보완하기 위해 등장한 것이 Ajax(Asynchronous JavaScript and XML)이다. Ajax(Asynchronous JavaScript and XML)는 자바스크립트를 이용해서 비동기적(Asynchronous)으로 서버와 브라우저가 데이터를 교환할 수 있는 통신 방식을 의미한다.
+
+서버로부터 웹페이지가 반환되면 화면 전체를 갱신해야 하는데 페이지 일부만을 갱신하고도 동일한 효과를 볼 수 있도록 하는 것이 Ajax이다. 페이지 전체를 로드하여 렌더링할 필요가 없고 갱신이 필요한 일부만 로드하여 갱신하면 되므로 빠른 퍼포먼스와 부드러운 화면 표시 효과를 기대할 수 있다
 
 ```html
 <!DOCTYPE html>
