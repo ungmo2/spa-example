@@ -1,7 +1,6 @@
 (function () {
   const root = document.querySelector('.app-root');
   const navigation = document.getElementById('navigation');
-  const URL = 'http://localhost:5004';
 
   function render(data) {
     const json = JSON.parse(data);
@@ -66,7 +65,8 @@
   navigation.addEventListener('click', e => {
     if (!e.target || e.target.nodeName !== 'A') return;
     e.preventDefault();
-    const path = e.target.href.replace(URL, '');
+    // 이동 페이지
+    const path = e.target.getAttribute('href');
 
     // 주소창의 url은 변경되지만 요청하지는 않는다.
     history.pushState({ path }, null, path);
