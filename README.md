@@ -81,11 +81,6 @@ $ npm run pjax
 
 link tag(`<a href="service.html">Service</a>` 등)을 클릭하면 href 어트리뷰트의 값이 URL의 path에 추가되어 주소창에 나타나고 해당 리소스를 서버에 요청된다. 
 
-![uri](/img/uri.png)
-
-URI의 구조
-{: .desc-img}
-
 이때 서버는 html로 화면을 표시하는데 부족함이 없는 완전한 리소스를 클라이언트에 응답한다. 이를 **서버 렌더링**이라 한다. 브라우저는 서버가 응답한 html을 수신하고 렌더링한다. 이때 이전 페이지에서 수신된 html로 전환하는 과정에서 전체 페이지를 새로 로딩하게 되므로 새로고침이 발생한다.
 
 이 방식은 응답된 html로 JavaScript가 필요없이 빠르게 렌더링이 가능하며 페이지마다 고유의 URL이 존재하므로 SEO 대응에 아무런 문제가 없다. 하지만 중복된 리소스를 요청마다 수신해야 하며, 새로고침이 발생하여 사용성이 좋지 않은 단점이 있다.
@@ -441,9 +436,61 @@ PJAX 방식은 서버에 새로운 요청을 보내지 않으며 따라서 페�
 
 다만, 브라우저의 새로고침 버튼을 클릭하면 예를들어 loclahost:5004/service와 같은 요청이 서버로 전달된다. 이때 서버는 URL에 따라 해당 리소스를 HTML으로 클라이언트에 응답하여야 한다.
 
-이는 **서버 렌더링 방식과 Ajax 방식이 혼재**되어 있는 것이다. 서버는 요청의 Content-Type이 text/html이면 HTML을 응답하고, 요청의 Content-Type이 application/json이면 해당 리소스만 JSON으로 응답하도록 구현하여야 한다.
+이는 **서버 렌더링 방식과 Ajax 방식이 혼재**되어 있는 것이다. 서버는 클라이언트의 request hader의 Accept가 'text/html'이면 HTML을 응답하고, request hader의 Accept가 'application/json'이면 필요 리소스만 JSON으로 응답하도록 구현하여야 한다. 예를 들어, 새로고침으로 브라우저에서 요청이 수행되면 request hader의 Accept는 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'이고 서버는 HTML을 응답한다. AJAX 요청의 경우, [setRequestHeader 메소드](https://developer.mozilla.org/ko/docs/XMLHttpRequest/setRequestHeader)를 사용하여 응답될 데이터의 mine type을 json으로 지정한다.
 
-위 예제를 실행하려면 아래의 명령어를 실행한다.
+이에 대한 구현 예제는 아래와 같다.
+
+```javascript
+// Client
+function get(url) {
+  return new Promise((resolve, reject) => {
+    const req = new XMLHttpRequest();
+    req.open('GET', url);
+    // 서버에 JSON을 요청한다.
+    req.setRequestHeader('Accept', 'application/json');
+    req.send();
+
+    req.onreadystatechange = function () {
+      if (req.readyState === XMLHttpRequest.DONE) {
+        if (req.status === 200) resolve(req.response);
+        else reject(req.statusText);
+      }
+    };
+  });
+}
+
+get('/service').then(res => render(res));
+```
+
+```javascript
+// Server
+const express = require('express');
+const app = express();
+const fs = require('fs');
+
+app.get('/service', (req, res) => {
+  res.format({
+    // 새로고침에 의한 브라우저 요청
+    'text/html': function(){
+      res.sendFile(path.join(__dirname + '/public/data/service.html'));
+    },
+    // Ajax 요청
+    'application/json': function(){
+      res.send(JSON.parse(fs.readFileSync('./public/data/service.json', 'utf8')));
+    },
+    'default': function() {
+      // log the request and respond with 406
+      res.status(406).send('Not Acceptable');
+    }
+  });
+});
+
+app.listen(3000, function () {
+  console.log('listening on http//localhost:3000');
+});
+```
+
+PJAX 방식의 예제를 실행하려면 아래의 명령어를 실행한다.
 
 ```bash
 $ npm run pjax
@@ -473,3 +520,5 @@ $ npm run pjax
 * [Get URL and URL Parts in JavaScript](https://css-tricks.com/snippets/javascript/get-url-and-url-parts-in-javascript/)
   
 * [해시뱅(#!)에 대해서](https://blog.outsider.ne.kr/698)
+
+* [XMLHttpRequest.setRequestHeader()](https://developer.mozilla.org/ko/docs/XMLHttpRequest/setRequestHeader)
