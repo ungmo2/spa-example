@@ -27,7 +27,7 @@
     });
   }
 
-  const route = {
+  const routes = {
     '/': function () {
       get('/data/home.json')
         .then(res => render(res));
@@ -46,7 +46,7 @@
   };
 
   function router(path) {
-    (route[path] || route.otherwise)(path);
+    (routes[path] || routes.otherwise)(path);
   }
 
   // history entry가 변경되면 발생하는 이벤트

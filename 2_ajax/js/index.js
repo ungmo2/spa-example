@@ -26,7 +26,7 @@
     });
   }
 
-  const route = {
+  const routes = {
     'home': function () {
       get('/data/home.json')
         .then(res => render(res));
@@ -45,7 +45,7 @@
   };
 
   function router(page) {
-    (route[page] || route.otherwise)(page);
+    (routes[page] || routes.otherwise)(page);
   }
 
   // AJAX 요청은 주소창의 url을 변경시키지 않으므로 history 관리가 되지 않는다.

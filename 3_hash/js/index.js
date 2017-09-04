@@ -25,7 +25,7 @@
     });
   }
 
-  const route = {
+  const routes = {
     '': function () {
       get('/data/home.json')
         .then(res => render(res));
@@ -46,7 +46,7 @@
   function router() {
     // url의 hash를 취득
     const hash = location.hash.replace('#', '');
-    (route[hash] || route.otherwise)();
+    (routes[hash] || routes.otherwise)();
   }
 
   // 네비게이션을 클릭하면 uri의 hash가 변경된다. 주소창의 uri가 변경되므로 history 관리가 가능하다.
