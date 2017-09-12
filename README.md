@@ -10,10 +10,10 @@ link tag를 사용하는 전통적인 웹 방식은 요청 시마다 정적 리�
 
 모든 소프트웨어 아키텍처에는 trade-off가 존재한다. SPA 또한 모든 애플리케이션에 적합한 은탄환(Silver bullet)은 아니다. SPA가 가지는 구조적인 단점은 아래와 같다.
 
-초기 구동 속도  
+초기 구동 속도
 : SPA는 웹 애플리케이션에 필요한 모든 정적 리소스를 최초에 한번 다운로드하기 때문에 초기 구동 속도가 상대적으로 느리다. 하지만 SPA는 웹페이지보다는 애플리케이션에 적합한 기술이므로 트래픽의 감소와 속도, 사용성, 반응성의 향상 등의 장점을 생각한다면 결정적인 단점이라고 할 수는 없다.
 
-SEO(검색엔진 최적화) 문제  
+SEO(검색엔진 최적화) 문제
 : SPA는 서버 렌더링 방식이 아닌 자바스크립트 기반 비동기 모델(클라이언트 랜더링 방식)이다. 따라서 SEO는 언제나 단점으로 부각되어 왔던 주제이다. 하지만 SPA는 정보의 제공을 위한 웹페이지보다는 애플리케이션에 적합한 기술이므로 SEO 이슈는 심각한 문제로 볼 수 없다. Angular 또는 React 등의 SPA 프레임워크는 서버 랜더링을 지원하는 SEO 대응 기술이 이미 존재하고 있어 SEO 대응이 필요한 페이지에 대해서는 선별적 SEO 대응이 가능하다.
 
 # 2. SPA와 Routing
@@ -33,7 +33,6 @@ $ npm install -g serve
 ```bash
 $ git clone https://github.com/ungmo2/spa-example.git
 $ cd spa-example
-$ npm install
 ```
 
 예제의 실행 방법은 아래와 같다.
@@ -51,7 +50,7 @@ $ npm run pjax
 
 ## 2.1 전통적 링크 방식
 
-전통적 링크 방식은 link tag로 동작하는 기본적인 웹페이지의 동작 방식이다. 아래 코드를 살펴보자. 
+전통적 링크 방식은 link tag로 동작하는 기본적인 웹페이지의 동작 방식이다. 아래 코드를 살펴보자.
 
 ```html
 <!DOCTYPE html>
@@ -79,7 +78,7 @@ $ npm run pjax
 </html>
 ```
 
-link tag(`<a href="service.html">Service</a>` 등)을 클릭하면 href 어트리뷰트의 값이 URL의 path에 추가되어 주소창에 나타나고 해당 리소스를 서버에 요청된다. 
+link tag(`<a href="service.html">Service</a>` 등)을 클릭하면 href 어트리뷰트의 값이 URL의 path에 추가되어 주소창에 나타나고 해당 리소스를 서버에 요청된다.
 
 이때 서버는 html로 화면을 표시하는데 부족함이 없는 완전한 리소스를 클라이언트에 응답한다. 이를 **서버 렌더링**이라 한다. 브라우저는 서버가 응답한 html을 수신하고 렌더링한다. 이때 이전 페이지에서 수신된 html로 전환하는 과정에서 전체 페이지를 새로 로딩하게 되므로 새로고침이 발생한다.
 
@@ -288,9 +287,9 @@ JavaScript의 구현은 아래와 같다.
   }
 
   // 네비게이션을 클릭하면 uri의 hash가 변경된다. 주소창의 uri가 변경되므로 history 관리가 가능하다.
-  // 이때 uri의 hash만 변경되면 서버로 요청을 수행하지 않는다. 
+  // 이때 uri의 hash만 변경되면 서버로 요청을 수행하지 않는다.
   // 따라서 uri의 hash가 변경하면 발생하는 이벤트인 hashchange 이벤트를 사용하여 hash의 변경을 감지하여 필요한 AJAX 요청을 수행한다.
-  // hash 방식의 단점은 uri에 불필요한 #이 들어간다는 것이다. 
+  // hash 방식의 단점은 uri에 불필요한 #이 들어간다는 것이다.
   window.addEventListener('hashchange', router);
 
   // DOMContentLoaded은 HTML과 script가 로드된 시점에 발생하는 이벤트로 load 이벤트보다 먼저 발생한다. (IE 9 이상 지원)
@@ -334,7 +333,7 @@ hash 방식의 가장 큰 단점은 SEO 이슈이다. 이를 보완한 방법이
       <li><a href="/about">About</a></li>
     </ul>
   </nav>
-  <div class="app-root">Loading...</div>  
+  <div class="app-root">Loading...</div>
 </body>
 </html>
 ```
@@ -399,7 +398,7 @@ JavaScript의 구현은 아래와 같다.
 
   // history entry가 변경되면 발생하는 이벤트
   // PJAX 방식은 hash를 사용하지 않으므로 hashchange 이벤트를 사용할 수 없다.
-  // popstate event는 pushState에 의해 발생시키지 않는다. 
+  // popstate event는 pushState에 의해 발생시키지 않는다.
   // 이전페이지 / 다음페이지 button 또는 history.back() / history.go(n)에 의해 발생한다.
   window.addEventListener('popstate', e => {
     // 이전페이지 / 다음페이지 button이 클릭되면 router를 호출
@@ -407,8 +406,8 @@ JavaScript의 구현은 아래와 같다.
     router(e.state.path);
   });
 
-  // 네비게이션을 클릭하면 주소창의 url이 변경되므로 서버로 요청이 전송된다. 
-  // preventDefault를 사용하여 이를 방지하고 history 관리를 위한 처리를 실시 
+  // 네비게이션을 클릭하면 주소창의 url이 변경되므로 서버로 요청이 전송된다.
+  // preventDefault를 사용하여 이를 방지하고 history 관리를 위한 처리를 실시
   navigation.addEventListener('click', e => {
     if (!e.target || e.target.nodeName !== 'A') return;
     e.preventDefault();
@@ -509,7 +508,7 @@ $ npm run pjax
 
 모든 소프트웨어 아키텍처에는 trade-off가 존재한다. SPA 또한 모든 애플리케이션에 적합한 은탄환(Silver bullet)은 아니다. 애플리케이션의 상황을 고려하여 적절한 방법을 선택할 필요가 있다.
 
-# Reference  
+# Reference
 
 * [브라우저 히스토리 조작하기](https://developer.mozilla.org/ko/docs/Web/API/History_API)
 
@@ -518,7 +517,7 @@ $ npm run pjax
 * [Making a Single Page App Without a Framework](https://tutorialzine.com/2015/02/single-page-app-without-a-framework)
 
 * [Get URL and URL Parts in JavaScript](https://css-tricks.com/snippets/javascript/get-url-and-url-parts-in-javascript/)
-  
+
 * [해시뱅(#!)에 대해서](https://blog.outsider.ne.kr/698)
 
 * [XMLHttpRequest.setRequestHeader()](https://developer.mozilla.org/ko/docs/XMLHttpRequest/setRequestHeader)
