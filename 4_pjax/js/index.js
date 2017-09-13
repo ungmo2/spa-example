@@ -29,16 +29,13 @@
 
   const routes = {
     '/': function () {
-      get('/data/home.json')
-        .then(res => render(res));
+      get('/data/home.json').then(render);
     },
     '/service': function () {
-      get('/data/service.json')
-        .then(res => render(res));
+      get('/data/service.json').then(render);
     },
     '/about': function () {
-      get('/data/about.html')
-        .then(res => renderHtml(res));
+      get('/data/about.html').then(renderHtml);
     },
     otherwise(path) {
       root.innerHTML = `${path} Not Found`;
@@ -51,7 +48,7 @@
 
   // history entry가 변경되면 발생하는 이벤트
   // PJAX 방식은 hash를 사용하지 않으므로 hashchange 이벤트를 사용할 수 없다.
-  // popstate event는 pushState에 의해 발생시키지 않는다. 
+  // popstate event는 pushState에 의해 발생시키지 않는다.
   // 이전페이지 / 다음페이지 button 또는 history.back() / history.go(n)에 의해 발생한다.
   window.addEventListener('popstate', e => {
     // e.state는 pushState 메소드의 첫번째 인수
@@ -60,8 +57,8 @@
     router(e.state.path);
   });
 
-  // 네비게이션을 클릭하면 주소창의 url이 변경되므로 서버로 요청이 전송된다. 
-  // preventDefault를 사용하여 이를 방지하고 history 관리를 위한 처리를 실시 
+  // 네비게이션을 클릭하면 주소창의 url이 변경되므로 서버로 요청이 전송된다.
+  // preventDefault를 사용하여 이를 방지하고 history 관리를 위한 처리를 실시
   navigation.addEventListener('click', e => {
     if (!e.target || e.target.nodeName !== 'A') return;
     e.preventDefault();
@@ -82,5 +79,4 @@
 
   // 새로고침이 클릭되었을 때, 현 페이지(예를들어 loclahost:5004/service)가 서버에 요청된다.
   // 서버측에는 이에 응답하는 기능이 추가되어야 한다.
-  // ex) app.get('/service', (req, res) => res.sendFile(path.join(__dirname + '/public/data/service.html')));
 }());

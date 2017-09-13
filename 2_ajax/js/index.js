@@ -28,16 +28,13 @@
 
   const routes = {
     'home': function () {
-      get('/data/home.json')
-        .then(res => render(res));
+      get('/data/home.json').then(render);
     },
     'service': function () {
-      get('/data/service.json')
-        .then(res => render(res));
+      get('/data/service.json').then(render);
     },
     'about': function () {
-      get('/data/about.html')
-        .then(res => renderHtml(res));
+      get('/data/about.html').then(renderHtml);
     },
     otherwise(page) {
       root.innerHTML = `${page} Not Found`;
