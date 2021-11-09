@@ -29,7 +29,7 @@ const render = async () => {
 
 // 네비게이션을 클릭하면 url의 hash가 변경되기 때문에 history 관리가 가능하다.
 // 단, url의 hash만 변경되면 서버로 요청은 수행하지 않는다.
-// url의 hash가 변경하면 발생하는 이벤트인 hashchange 이벤트를 사용하여 hash의 변경을 감지하여 필요한 AJAX 요청을 수행한다.
+// url의 hash가 변경하면 발생하는 이벤트인 hashchange 이벤트를 사용하여 hash의 변경을 감지하여 필요한 ajax 요청을 수행한다.
 // hash 방식의 단점은 url에 /#foo와 같은 해시뱅(HashBang)이 들어간다는 것이다.
 window.addEventListener('hashchange', render);
 

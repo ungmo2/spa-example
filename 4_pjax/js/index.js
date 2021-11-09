@@ -28,7 +28,7 @@ const render = async path => {
 
 // pjax 방식은 hash를 사용하지 않으므로 hashchange 이벤트를 사용할 수 없다.
 // popstate 이벤트는 pushState에 의해 발생하지 않고
-// 이전페이지/다음페이지 버튼을 클릭하거나 history.back()/history.go(n)에 의해
+// 이전페이지/다음페이지 버튼을 클릭하거나 history.forward/back/go(n)에 의해
 // history entry가 변경되면 발생한다.
 window.addEventListener('popstate', e => {
   // e.state는 pushState 메서드에게 전달한 첫번째 인수 {path}
